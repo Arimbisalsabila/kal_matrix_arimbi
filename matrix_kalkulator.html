@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Arimbi Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .matrix {
+            display: inline-block;
+            margin: 20px;
+        }
+        input[type="number"] {
+            width: 50px;
+            margin: 5px;
+            text-align: center;
+        }
+        .buttons {
+            margin: 20px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arimbi Matrix Calculator</h1>
+    <div class="matrix" id="matrixA">
+        <h2>Matrix A</h2>
+        <input type="number" id="a11" placeholder="A11"> <input type="number" id="a12" placeholder="A12"><br>
+        <input type="number" id="a21" placeholder="A21"> <input type="number" id="a22" placeholder="A22">
+    </div>
+    <div class="matrix" id="matrixB">
+        <h2>Matrix B</h2>
+        <input type="number" id="b11" placeholder="B11"> <input type="number" id="b12" placeholder="B12"><br>
+        <input type="number" id="b21" placeholder="B21"> <input type="number" id="b22" placeholder="B22">
+    </div>
+    <div class="buttons">
+        <button onclick="addMatrices()">tambah</button>
+        <button onclick="subtractMatrices()">kurang</button>
+        <button onclick="multiplyMatrices()">kali</button>
+    </div>
+    <div class="result" id="result">
+        <h2>Result</h2>
+        <div id="resultMatrix"></div>
+    </div>
+
+    <script>
+        function addMatrices() {
+            const result = calculate((a, b) => a + b);
+            displayResult(result);
+        }
+
+        function subtractMatrices() {
+            const result = calculate((a, b) => a - b);
+            displayResult(result);
+        }
+
+        function multiplyMatrices() {
+            const a11 = parseFloat(document.getElementById('a11').value) || 0;
+            const a12 = parseFloat(document.getElementById('a12').value) || 0;
+            const a21 = parseFloat(document.getElementById('a21').value) || 0;
+            const a22 = parseFloat(document.getElementById('a22').value) || 0;
+
+            const b11 = parseFloat(document.getElementById('b11').value) || 0;
+            const b12 = parseFloat(document.getElementById('b12').value) || 0;
+            const b21 = parseFloat(document.getElementById('b21').value) || 0;
+            const b22 = parseFloat(document.getElementById('b22').value) || 0;
+
+            const result = [
+                [a11 * b11 + a12 * b21, a11 * b12 + a12 * b22],
+                [a21 * b11 + a22 * b21, a21 * b12 + a22 * b22]
+            ];
+
+            displayResult(result);
+        }
+
+        function calculate(operation) {
+            const a11 = parseFloat(document.getElementById('a11').value) || 0;
+            const a12 = parseFloat(document.getElementById('a12').value) || 0;
+            const a21 = parseFloat(document.getElementById('a21').value) || 0;
+            const a22 = parseFloat(document.getElementById('a22').value) || 0;
+
+            const b11 = parseFloat(document.getElementById('b11').value) || 0;
+            const b12 = parseFloat(document.getElementById('b12').value) || 0;
+            const b21 = parseFloat(document.getElementById('b21').value) || 0;
+            const b22 = parseFloat(document.getElementById('b22').value) || 0;
+
+            return [
+                [operation(a11, b11), operation(a12, b12)],
+                [operation(a21, b21), operation(a22, b22)]
+            ];
+        }
+
+        function displayResult(matrix) {
+            const resultMatrix = document.getElementById('resultMatrix');
+            resultMatrix.innerHTML = 
+                `<p>${matrix[0][0]} ${matrix[0][1]}</p>
+                 <p>${matrix[1][0]} ${matrix[1][1]}</p>`;
+        }
+    </script>
+</body>
+</html>
+<script src="matrix-calculator.js"></script>
